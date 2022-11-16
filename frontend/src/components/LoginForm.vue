@@ -10,6 +10,11 @@
     </form>
 </template>
 
+<script>
+export default{
+    
+}
+</script>
 <style scoped>
 form {
     display: flex;
