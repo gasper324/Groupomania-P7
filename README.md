@@ -1,2 +1,0 @@
-# Groupomania P7
- 
