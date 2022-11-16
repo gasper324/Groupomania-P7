@@ -21,7 +21,23 @@
             <label for="confirm-password">Confirm Password</label>
             <input type="text" name="confirm-password">
         </div>
+        <button>Sumbit</button>
     </form>
 </template>
 
-<script></script>
+<script>
+export default ({
+    
+})
+
+</script>
+
+<style scoped>
+div {
+    padding: 5px
+}
+
+label {
+    padding-right: 5px
+}
+</style>
