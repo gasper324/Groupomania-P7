@@ -10,9 +10,11 @@ import CreatePost from './components/posts/CreatePost.vue';
 const router = createRouter({
     history: createWebHistory(),
     routes: [
+        { path: '/', redirect: '/login'},
         { path: '/login', component: LoginForm},
         { path: '/signup', component: SignupForm},
-        { path: '/createPost', component: CreatePost}
+        { path: '/createPost', component: CreatePost},
+        { path: '/:notfound(.*)', redirect: '/login'}
     ]
 });
 
