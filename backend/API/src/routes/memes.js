@@ -3,15 +3,16 @@ const express = require('express');
 const router = express.Router();
 
 const auth = require('../middleware/auth');
+const multer = require('../middleware/multer-config');
 
 //require controller functions
 const memesCtrl = require('../controllers/memes');
 
 //sets up endpoints for memes
-router.post('/', auth, memesCtrl.createPost);
-router.get('/', memesCtrl.getAllPosts);
-router.get('/:postId', memesCtrl.getPostById);
-router.put('/:postId', memesCtrl.updatePostById);
-router.delete('/:postId', memesCtrl.deletePostById);
+router.post('/', auth, multer, memesCtrl.createPost);
+router.get('/', auth, memesCtrl.getAllPosts);
+router.get('/:postId', auth, memesCtrl.getPostById);
+router.put('/:postId', auth, multer, memesCtrl.updatePostById);
+router.delete('/:postId', auth, multer, memesCtrl.deletePostById);
 
 module.exports = router;
