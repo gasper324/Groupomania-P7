@@ -26,7 +26,8 @@ export default{
                     body: JSON.stringify(loginData)
                 });
             const data = await response.json()
-            console.log(data)
+            console.log(data.token)
+            localStorage.setItem('token', data.token)
         }
     }
 }
