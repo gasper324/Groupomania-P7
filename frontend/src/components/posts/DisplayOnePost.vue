@@ -4,6 +4,8 @@
         <img alt="post.description" :src="post.image">
         <p>{{post.description}}</p>
         <p>{{post.text}}</p>
+        <button @click="editPost">Edit Post</button>
+        <button @click="deletePost">Delete Post</button>
     </section>
 </template>
 
@@ -30,14 +32,26 @@ export default {
             for (let i = 0; i < data.length; i++) {
                 this.postArray.push(data[i])
             }
+        },
+        async editPost() {
+            console.log('edit')
+        },
+        async deletePost() {
+            console.log('delete')
+            const token = localStorage.getItem('token');
+            await fetch("http://localhost:3000/api/memes/" + this.postId, {
+                    method: 'DELETE',
+                    headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + token
+                    }
+            });
+            this.$router.push('/viewPosts')
         }
     },
     created() {
         this.postId = (this.$route.params.postid);
-        console.log(this.postId)
         this.getPosts()
-        
-
     }
 }
 </script>

@@ -36,6 +36,7 @@ exports.updatePostById = async (req, res, next) => {  // looks successful when p
 };
 
 exports.deletePostById = async (req, res, next) => {
+  console.log('here')
   const postId = parseInt(req.params.postId);
   await db.query('DELETE FROM post WHERE postId = $1', [postId]);
   res.status(200).send({message: 
