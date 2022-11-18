@@ -3,11 +3,14 @@
         <img src="../assets/Groupomania_Logos/icon.png" alt="Groupomania Logo" id="header-logo">
         <h2>Groupomania</h2>
         <nav>
-            <button>Log-In</button>
-            <button>Sign-Up</button>
+            <router-link to="/login">Log-In</router-link>
+            <router-link to="/signup">Sign-Up</router-link>
+            <router-link to="/viewPosts">View Posts</router-link>
+            <router-link to="/createPost">Create Post</router-link>
         </nav>
     </header>
 </template>
+
 
 <style scoped>
 #header-logo {

@@ -6,7 +6,8 @@
             <input type="text" name="title" v-model="title">
         </div>
         <div>
-            <input type="file" accept="image/*" name="imageUrl" @change="uploadPhoto">
+            <label for="image">Upload Image</label>
+            <input type="file" accept="image/*" name="image" @change="uploadPhoto">
         </div>
         <div>
             <label for="img-desc">Image description</label>
@@ -25,17 +26,18 @@
 export default {
     data() {
         return {
-            imageUrl: null
+            image: null
         }
     },
     methods: {
         uploadPhoto(event) {
-            this.imageUrl = event.target.files[0]
+            this.image = event.target.files[0].name
+            console.log(this.image)
         },
         async createPost() {
             const postData = {
                 title: this.title,
-                imageUrl: this.imageUrl,
+                image: this.image,
                 description: this.imgDesc,
                 postText: this.text
             };
@@ -47,9 +49,9 @@ export default {
                         'Content-Type': 'application/json', 
                         'Authorization': 'Bearer ' + token
                     },
+                    // enctype: "multipart/formdata",
                     body: JSON.stringify(postData)
                 });
-            console.log('posted');
         }
     }
 }

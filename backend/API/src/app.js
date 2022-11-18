@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const path = require('path');
 
 const dotenv = require('dotenv');
 dotenv.config();
@@ -26,6 +27,7 @@ const commentRoutes = require('./routes/comments');
 
 app.use(index);
 
+app.use('/images', express.static(path.join(__dirname, 'images'))); 
 app.use('/api/memes', memeRoutes);
 app.use('/api/user', userRoutes);
 app.use('/api/comments', commentRoutes);
