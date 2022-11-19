@@ -4,8 +4,30 @@
         <img alt="post.description" :src="post.image">
         <p>{{post.description}}</p>
         <p>{{post.text}}</p>
-        <button @click="editPost">Edit Post</button>
+        <button @click="editPostVisible">Edit Post</button>
         <button @click="deletePost">Delete Post</button>
+    </section>
+    <section v-if="editVisible">    
+        <h2>Edit post</h2>
+            <form @submit.prevent="createPost">
+                <div>
+                    <label for="title">Post Title</label>
+                    <input type="text" name="title" v-model="title">
+                </div>
+                <div>
+                    <label for="image">Upload Image</label>
+                    <input type="file" accept="image/*" name="image" @change="uploadPhoto">
+                </div>
+                <div>
+                    <label for="img-desc">Image description</label>
+                    <input type="text" name="img-desc" v-model="imgDesc">
+                </div>
+                <div>
+                    <label for="text">Write your post here</label>
+                    <input type="textarea" name="text" v-model="text">
+                </div>
+                <button @click="submitEdits">Submit Post Edits</button>
+            </form>
     </section>
 </template>
 
@@ -14,7 +36,8 @@ export default {
     data() {
         return {
             postArray: [],
-            postId:''
+            postId:'',
+            editVisible: false
         }
     },
 
@@ -29,12 +52,14 @@ export default {
                 });
             const data = await response.json()
             console.log(data)
-            for (let i = 0; i < data.length; i++) {
-                this.postArray.push(data[i])
-            }
+            this.postArray.push(data[0])
+
         },
-        async editPost() {
-            console.log('edit')
+        editPostVisible() {
+            this.editVisible = !this.editVisible
+        },
+        submitEdits() {
+            console.log('edits')
         },
         async deletePost() {
             console.log('delete')
