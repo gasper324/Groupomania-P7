@@ -27,7 +27,7 @@ const commentRoutes = require('./routes/comments');
 
 app.use(index);
 
-app.use('/images', express.static(path.join(__dirname, 'images'))); 
+app.use('/api/images', express.static(path.join(__dirname, 'images'))); 
 app.use('/api/memes', memeRoutes);
 app.use('/api/user', userRoutes);
 app.use('/api/comments', commentRoutes);

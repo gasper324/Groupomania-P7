@@ -1,11 +1,11 @@
 <template>
     <router-link v-for="post in postsArray" :key="post.postid" @click="viewPost" :to="'/viewPost/' + post.postid">
-        <section >
+        <section > {{post}}
             <h2>{{post.title}}</h2>
-            <img :alt="post.description" :src="post.image">
+            <img :src="post.image">
             <p>{{post.description}}</p>
-            <p>{{post.text}}</p>
-        </section>
+            <p>{{post.posttext}}</p>
+        </section> 
     </router-link>
 </template>
 
@@ -35,7 +35,15 @@ export default {
     },
     created() {
         this.getPosts()
+        this.page = "viewPosts"
     }
 };
 
 </script>
+
+<style scoped>
+img {
+    width: 200px;
+    height: 200px
+}
+</style>

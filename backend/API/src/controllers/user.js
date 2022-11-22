@@ -38,3 +38,11 @@ exports.login = async (req, res, next) => {
         message: "Login successful"
     });
 };
+
+exports.deleteAccount = async (req, res, next) => {
+    const userId = req.params.userId
+    await db.query('DELETE FROM user WHERE userId = $1', [userId]);
+    res.status(200).send({
+        message: 'Account deleted'})
+
+}

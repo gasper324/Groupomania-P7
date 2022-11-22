@@ -1,18 +1,20 @@
 const db = require("../config/database.js");
+const fs = require('fs');
 
 exports.createPost = async (req, res, next) => {
-    const { title, postText, image, description } = req.body;
+    const url = req.protocol + '://' + req.get('host');
+    const image = url + '/' + req.file.filename;
+    const { title, postText, description } = JSON.parse(req.body.post);
     const { rows } = await db.query(
         "INSERT INTO post (title, postText, image, description) VALUES ($1, $2, $3, $4)",
         [title, postText, image, description]
       );
-    
       res.status(201).send({
         message: "Post added successfully!",
         body: {
           post: { title, postText, image, description}
         },
-      });
+      })
     };
     
 exports.getAllPosts = async (req, res, next) => {

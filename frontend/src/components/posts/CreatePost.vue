@@ -7,15 +7,15 @@
         </div>
         <div>
             <label for="image">Upload Image</label>
-            <input type="file" accept="image/*" name="image" @change="uploadPhoto">
+            <input type="file" accept="image/*" name="image" ref="file" @change="uploadPhoto">
         </div>
         <div>
             <label for="img-desc">Image description</label>
-            <input type="text" name="img-desc" v-model="imgDesc">
+            <input type="text" name="img-desc" v-model="description">
         </div>
         <div>
             <label for="text">Write your post here</label>
-            <input type="textarea" name="text" v-model="text">
+            <input type="textarea" name="text" v-model="postText">
         </div>
         <button>Post</button>
     </form>
@@ -26,32 +26,58 @@
 export default {
     data() {
         return {
-            image: null
+            file: null
         }
     },
     methods: {
-        uploadPhoto(event) {
-            this.image = event.target.files[0].name
-            console.log(this.image)
+        uploadPhoto() {
+            // this.image = event.target.files[0].name
+            // console.log(this.image)
+            this.file = this.$refs.file.files[0];
+            this.fileSource = URL.createObjectURL(this.$refs.file.files[0])
+            console.log(this.file)
+            console.log(this.fileSource)
         },
         async createPost() {
-            const postData = {
-                title: this.title,
-                image: this.image,
-                description: this.imgDesc,
-                postText: this.text
-            };
+            let formData = [];
+            let requestOptions = {};
             const token = localStorage.getItem('token');
-            console.log(postData);
-            await fetch("http://localhost:3000/api/memes", {
-                    method: 'POST',
+            console.log(this.file)
+            if (this.file != null) {
+                console.log('Bye')
+                let post = JSON.stringify({
+                    title: this.title,
+                    description: this.description,
+                    postText: this.postText
+                });
+                console.log(post)
+                formData = new FormData();
+                formData.set('image', this.file);
+                formData.set('post', post);
+                console.log(formData);
+                requestOptions = {
+                    method: "POST",
                     headers: {
-                        'Content-Type': 'application/json', 
                         'Authorization': 'Bearer ' + token
                     },
-                    // enctype: "multipart/formdata",
-                    body: JSON.stringify(postData)
-                });
+                    body: formData
+                }
+            } else {
+                console.log('Here')
+                formData = {
+                    title: this.title,
+                    description: this.description,
+                    postText: this.postText
+                }
+                requestOptions = {        
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": "Bearer " + token
+                    },
+                    body: JSON.stringify(formData)}
+            }
+            await fetch("http://localhost:3000/api/memes", requestOptions);
         }
     }
 }
