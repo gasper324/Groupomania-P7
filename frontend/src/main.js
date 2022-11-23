@@ -8,6 +8,7 @@ import SignupForm from './components/SignupForm.vue';
 import CreatePost from './components/posts/CreatePost.vue';
 import DisplayPosts from './components/posts/DisplayPosts.vue';
 import DisplayOnePost from './components/posts/DisplayOnePost.vue';
+import DeleteAccount from './components/DeleteAccount.vue'
 
 const router = createRouter({
     history: createWebHistory(),
@@ -17,7 +18,8 @@ const router = createRouter({
         { path: '/signup', component: SignupForm},
         { path: '/createPost', component: CreatePost},
         { path: '/viewPosts', component: DisplayPosts},
-        { path: '/viewPost/:postid', component: DisplayOnePost, props: true},
+        { path: '/viewPost/:postid', component: DisplayOnePost},
+        { path: '/deleteAccount', component: DeleteAccount},
         { path: '/:notfound(.*)', redirect: '/login'}
     ]
 });

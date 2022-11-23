@@ -4,10 +4,10 @@ const fs = require('fs');
 exports.createPost = async (req, res, next) => {
     const url = req.protocol + '://' + req.get('host');
     const image = url + '/' + req.file.filename;
-    const { title, postText, description } = JSON.parse(req.body.post);
+    const { title, postText, description, usersRead } = JSON.parse(req.body.post);
     const { rows } = await db.query(
-        "INSERT INTO post (title, postText, image, description) VALUES ($1, $2, $3, $4)",
-        [title, postText, image, description]
+        "INSERT INTO post (title, postText, image, description, usersRead) VALUES ($1, $2, $3, $4, $5)",
+        [title, postText, image, description, usersRead]
       );
       res.status(201).send({
         message: "Post added successfully!",
@@ -31,9 +31,13 @@ exports.getPostById = async (req, res, next) => {  // needs error for param id n
 
 exports.updatePostById = async (req, res, next) => {  // looks successful when param is non-existant
   const postId = parseInt(req.params.postId);
-  const { title, postText, image, description } = req.body;
-  const post = await db.query('UPDATE post SET title = $1, postText = $2, image = $3, description = $4 WHERE postID = $5',
-    [title, postText, image, description, postId]);
+  console.log(req.params)
+  
+  const usersRead = await db.query('SELECT usersRead from "user" WHERE userId = $1', [userId])
+  const { title, postText, image, description, usersRead} = req.body;
+  console.log(usersRead)
+  const post = await db.query('UPDATE post SET title = $1, postText = $2, image = $3, description = $4, usersRead = $5 WHERE postID = $6',
+    [title, postText, image, description, usersRead, postId]);
   res.status(200).send({message: 'Post updated successfully'})
 };
 

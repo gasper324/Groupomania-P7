@@ -48,7 +48,8 @@ export default {
                 let post = JSON.stringify({
                     title: this.title,
                     description: this.description,
-                    postText: this.postText
+                    postText: this.postText,
+                    usersRead: []
                 });
                 console.log(post)
                 formData = new FormData();

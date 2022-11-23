@@ -42,7 +42,7 @@ export default {
     },
 
     methods: {
-        async getPosts() {
+        async getPost() {
             const token = localStorage.getItem('token');
             const response = await fetch("http://localhost:3000/api/memes/" + this.postId, {
                     headers: {
@@ -55,6 +55,24 @@ export default {
             this.post = data[0]
             console.log(this.post.title)
 
+
+            console.log('push')
+            const userId = localStorage.getItem('userId')
+            const postData = {
+                title: this.post.title,
+                image: this.post.image,
+                description: this.post.description,
+                postText: this.post.posttext,
+                usersRead: userId
+            };
+            await fetch("http://localhost:3000/api/memes/" + this.postId, {
+                    method: 'PUT',
+                    headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + token
+                    },
+                    body: JSON.stringify(postData)
+                })
         },
         editPostVisible() {
             this.editVisible = !this.editVisible
@@ -65,7 +83,7 @@ export default {
                 title: this.post.title,
                 image: this.post.image,
                 description: this.post.description,
-                postText: this.post.posttext
+                postText: this.post.posttext,
             };
             const token = localStorage.getItem('token');
             await fetch("http://localhost:3000/api/memes/" + this.postId, {
@@ -92,8 +110,7 @@ export default {
     },
     created() {
         this.postId = (this.$route.params.postid);
-        this.page = 'viewPost'
-        this.getPosts()
+        this.getPost()
     }
 }
 </script>
