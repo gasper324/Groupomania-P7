@@ -51,19 +51,23 @@ export default {
                     },
                 });
             const data = await response.json()
-            console.log(data)
+            console.log(data[0])
             this.post = data[0]
-            console.log(this.post.title)
+            let usersReadArray = this.post.usersread;
 
-
-            console.log('push')
             const userId = localStorage.getItem('userId')
+            usersReadArray = JSON.parse("[" + usersReadArray.slice(1, usersReadArray.length-1) + "]")
+            console.log(usersReadArray)
+            console.log(userId)
+            usersReadArray.push(userId)
+            usersReadArray = JSON.parse("{" + usersReadArray.slice(1, usersReadArray.length-1) + "}")
+            console.log(usersReadArray)
             const postData = {
                 title: this.post.title,
                 image: this.post.image,
                 description: this.post.description,
                 postText: this.post.posttext,
-                usersRead: userId
+                usersRead: usersReadArray
             };
             await fetch("http://localhost:3000/api/memes/" + this.postId, {
                     method: 'PUT',
