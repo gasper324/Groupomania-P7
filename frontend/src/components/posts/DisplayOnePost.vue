@@ -53,23 +53,35 @@ export default {
             const data = await response.json()
             console.log(data[0])
             this.post = data[0]
-            let usersReadArray = this.post.usersread;
+            // let usersReadArray = this.post.usersread;
 
-            const userId = localStorage.getItem('userId')
-            usersReadArray = JSON.parse("[" + usersReadArray.slice(1, usersReadArray.length-1) + "]")
-            console.log(usersReadArray)
-            console.log(userId)
-            usersReadArray.push(userId)
-            usersReadArray = JSON.parse("{" + usersReadArray.slice(1, usersReadArray.length-1) + "}")
-            console.log(usersReadArray)
-            const postData = {
-                title: this.post.title,
-                image: this.post.image,
-                description: this.post.description,
-                postText: this.post.posttext,
-                usersRead: usersReadArray
-            };
-            await fetch("http://localhost:3000/api/memes/" + this.postId, {
+            // const userId = localStorage.getItem('userId')
+            // usersReadArray = JSON.parse("[" + usersReadArray.slice(1, usersReadArray.length-1) + "]")
+            // console.log(usersReadArray)
+            // console.log(userId)
+            // usersReadArray.push(userId)
+            // console.log(usersReadArray)
+            // const postData = {
+            //     title: this.post.title,
+            //     image: this.post.image,
+            //     description: this.post.description,
+            //     postText: this.post.posttext,
+            //     userNum: userId
+            // };
+            // // await fetch("http://localhost:3000/api/memes/" + this.postId, {
+            //         method: 'PUT',
+            //         headers: {
+            //         'Content-Type': 'application/json',
+            //         'Authorization': 'Bearer ' + token
+            //         },
+            //         body: JSON.stringify(postData)
+            //     })
+        },
+        async updateUserRead() {
+            const token = localStorage.getItem('token');
+            const userId = localStorage.getItem('userId');
+            const postData = {userNum: userId}
+                await fetch("http://localhost:3000/api/memes/usersRead/" + this.postId, {
                     method: 'PUT',
                     headers: {
                     'Content-Type': 'application/json',
@@ -114,7 +126,8 @@ export default {
     },
     created() {
         this.postId = (this.$route.params.postid);
-        this.getPost()
+        this.getPost();
+        this.updateUserRead()
     }
 }
 </script>
