@@ -1,4 +1,8 @@
 <template>
+    <nav>
+        <router-link to="/viewPosts">View Posts</router-link>
+        <router-link to="/createPost">Create Post</router-link>
+    </nav>
     <section v-if="fullName !== null">
         <h2>Account Deletion</h2>
         <h3><span>{{fullName}}</span>, click the button below to delete your account</h3>

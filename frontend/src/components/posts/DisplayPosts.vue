@@ -1,4 +1,8 @@
 <template>
+    <nav>
+        <router-link to="/deleteAccount">Delete Account</router-link>
+        <router-link to="/createPost">Create Post</router-link>
+    </nav>
     <router-link v-for="post in postsArray" :key="post.postid" @click="viewPost" :to="'/viewPost/' + post.postid">
         <section>
             <h1 v-if="post.usersread.includes(parseInt(userId)) === true">Post Read</h1>

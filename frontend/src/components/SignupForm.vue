@@ -1,4 +1,7 @@
 <template>
+    <nav>
+        <router-link to="/login">Log-in</router-link>
+    </nav>
     <h2>Complete form to Sign-Up</h2>
     <form @submit.prevent="submitForm">
         <div>
@@ -63,7 +66,34 @@ div {
     padding: 5px
 }
 
-label {
-    padding-right: 5px
+input {
+    width: 255px;
+    
 }
+
+label {
+    display: flex;
+    justify-content: center;
+    padding: 12px 0 5px 0;
+    width: 100%;
+    color: #FD2D01;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    margin: 10px
+}
+
+button {
+    display: flex;
+    justify-content: center;
+    width: 40%;
+    max-width: 250px;
+    margin: 20px 30% 0 30%;
+    background-color: #FD2D01;
+    color: #FFFFFF;
+    border:  black solid 1px
+}
+
 </style>

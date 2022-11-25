@@ -1,14 +1,7 @@
 <template>
     <header>
-        <img src="../assets/Groupomania_Logos/icon.png" alt="Groupomania Logo" id="header-logo">
-        <h2>Groupomania</h2>
-        <nav>
-            <router-link to="/login">Log-In</router-link>
-            <router-link to="/signup">Sign-Up</router-link>
-            <router-link to="/deleteAccount">Delete Account</router-link>
-            <router-link to="/viewPosts">View Posts</router-link>
-            <router-link to="/createPost">Create Post</router-link>
-        </nav>
+        <img src="../assets/Groupomania_Logos/icon-above-font.png" alt="Groupomania Logo" id="header-logo">
+        <h2></h2>
     </header>
 </template>
 
@@ -18,7 +11,8 @@ export default {
     data() {
         return {
             userId: "",
-            userFullName: ""
+            userFullName: "",
+            isLoggedIn: false
         }
     },
 }
@@ -26,12 +20,14 @@ export default {
 
 <style scoped>
 #header-logo {
-    width: 25%;
+    width: 350px;
+    height: 150px;
+    object-fit: cover;
+
 }
 
 header {
     display: flex;
-    border: solid 5px black;
-    background-color: pink;
+    justify-content: center;
 }
 </style>

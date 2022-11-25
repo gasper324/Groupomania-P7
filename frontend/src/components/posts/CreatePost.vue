@@ -1,4 +1,8 @@
 <template>
+    <nav>
+        <router-link to="/deleteAccount">Delete Account</router-link>
+        <router-link to="/viewPosts">View Posts</router-link>
+    </nav>
     <h2>Create a post</h2>
     <form @submit.prevent="createPost">
         <div>

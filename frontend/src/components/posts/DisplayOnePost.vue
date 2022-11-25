@@ -1,4 +1,9 @@
 <template>
+    <nav>
+        <router-link to="/deleteAccount">Delete Account</router-link>
+        <router-link to="/viewPosts">View Posts</router-link>
+        <router-link to="/createPost">Create Post</router-link>
+    </nav>
     <section>
         <h2>{{post.title}}</h2>
         <img alt="post.description" :src="post.image">

@@ -1,6 +1,6 @@
 <template>
     <section>
-        <h2>Please Log-In</h2>
+        <h3>Enter your email and password to login</h3>
         <form @submit.prevent="login">
             <div>
                 <label for="email">Email</label>
@@ -10,8 +10,8 @@
                 <label for="password">Password</label>
                 <input type="text" name="password" v-model="password">
             </div>
-            <button>Sign in</button>
-            <p>No account?  Click to sign-up</p>
+            <button>Login</button>
+            <p>No account?  Click to <span @click="linkToSignup">sign-up</span></p>
         </form>
     </section>
 </template>
@@ -45,24 +45,66 @@ export default{
             this.$router.push('/viewPosts')
 
         },
-        loginCheck() {
-            console.log(localStorage.getItem('userId'));
-            if (localStorage.getItem('userId') !== null) {
-                return false
-            } else {
-                return true
-            }
+        linkToSignup() {
+            this.$router.push('/signup')
         }
     },
 }
 </script>
+
 <style scoped>
 form {
     display: flex;
     flex-direction: column;
+    margin: 10px
+}   
+
+h3 {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    width: 100%;
+}
+
+div {
+    width: 100%;
+    display: flex;
+    padding: 10px 0;
+    justify-content: center;
 }
 
 input {
-    width: 80%;
+    width: 255px;
+    
+}
+
+label {
+    display: flex;
+    justify-content: right;
+    padding: 0 8px;
+    width: 100px;
+    color: #FD2D01;
+}
+
+button {
+    display: flex;
+    justify-content: center;
+    width: 26%;
+    margin: 8px 37% 0 37%;
+    background-color: #FD2D01;
+    color: #FFFFFF;
+    border:  black solid 1px
+}
+
+span {
+    color: blue;
+    padding-left: 5px
+}
+
+p {
+    width: 100%;
+    margin-top: 30px;
+    justify-content: center;
+    display: flex;
 }
 </style>

@@ -11,7 +11,7 @@ import HeaderComponent from './components/HeaderComponent.vue';
 export default {
   data() {
     return {
-      userId: "Start"
+      userId: ""
     }
   },
   components: {
@@ -33,4 +33,22 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 }
+
+nav {
+    display: flex;
+    justify-content: right;
+    position: absolute;
+    top: 15px;
+    right: 0px;
+    background-color: white;
+    width: 100%;
+    
+}
+
+a {
+  margin: 5px 15px;
+  text-decoration: none;
+  color: #FD2D01;
+}
+
 </style>
