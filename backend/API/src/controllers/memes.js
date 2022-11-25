@@ -3,7 +3,7 @@ const fs = require('fs');
 
 exports.createPost = async (req, res, next) => {
     const url = req.protocol + '://' + req.get('host');
-    const image = url + '/' + req.file.filename;
+    const image = url + '/images/' + req.file.filename;
     const { title, postText, description, usersRead } = JSON.parse(req.body.post);
     const { rows } = await db.query(
         "INSERT INTO post (title, postText, image, description, usersRead) VALUES ($1, $2, $3, $4, $5)",

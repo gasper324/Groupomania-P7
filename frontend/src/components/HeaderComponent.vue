@@ -8,7 +8,6 @@
             <router-link to="/deleteAccount">Delete Account</router-link>
             <router-link v-if="this.page !== 'viewPost'" to="/viewPosts">View Posts</router-link>
             <router-link to="/createPost">Create Post</router-link>
-
         </nav>
     </header>
 </template>

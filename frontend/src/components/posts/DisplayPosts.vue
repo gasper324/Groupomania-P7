@@ -1,11 +1,13 @@
 <template>
     <router-link v-for="post in postsArray" :key="post.postid" @click="viewPost" :to="'/viewPost/' + post.postid">
-        <section > {{post}}
+        <section>
+            <h4>{{post.usersread}}</h4>
+            <h1 v-if="post.usersread.includes(parseInt(userId)) === true">Post Read</h1>
             <h2>{{post.title}}</h2>
             <img :src="post.image">
             <p>{{post.description}}</p>
             <p>{{post.posttext}}</p>
-        </section> 
+        </section>
     </router-link>
 </template>
 
@@ -15,6 +17,8 @@ export default {
     data() {
         return {
             postsArray: [],
+            isRead: false,
+            userId: localStorage.getItem('userId')
         }
     },
     methods: {
