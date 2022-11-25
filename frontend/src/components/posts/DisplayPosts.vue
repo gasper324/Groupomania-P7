@@ -1,7 +1,6 @@
 <template>
     <router-link v-for="post in postsArray" :key="post.postid" @click="viewPost" :to="'/viewPost/' + post.postid">
         <section>
-            <h4>{{post.usersread}}</h4>
             <h1 v-if="post.usersread.includes(parseInt(userId)) === true">Post Read</h1>
             <h2>{{post.title}}</h2>
             <img :src="post.image">
