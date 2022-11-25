@@ -85,15 +85,4 @@ form {
     margin: 10px
 }
 
-button {
-    display: flex;
-    justify-content: center;
-    width: 40%;
-    max-width: 250px;
-    margin: 20px 30% 0 30%;
-    background-color: #FD2D01;
-    color: #FFFFFF;
-    border:  black solid 1px
-}
-
 </style>

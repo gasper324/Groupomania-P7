@@ -1,7 +1,6 @@
 <template>
     <header>
         <img src="../assets/Groupomania_Logos/icon-above-font.png" alt="Groupomania Logo" id="header-logo">
-        <h2></h2>
     </header>
 </template>
 
@@ -29,5 +28,12 @@ export default {
 header {
     display: flex;
     justify-content: center;
+}
+
+h3 {
+    position: absolute;
+    top:0px;
+    left:10px;
+    z-index: 2;
 }
 </style>

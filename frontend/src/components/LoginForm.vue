@@ -86,16 +86,6 @@ label {
     color: #FD2D01;
 }
 
-button {
-    display: flex;
-    justify-content: center;
-    width: 26%;
-    margin: 8px 37% 0 37%;
-    background-color: #FD2D01;
-    color: #FFFFFF;
-    border:  black solid 1px
-}
-
 span {
     color: blue;
     padding-left: 5px

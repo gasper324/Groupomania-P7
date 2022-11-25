@@ -6,8 +6,7 @@
     </nav>
     <section>
         <h2>{{post.title}}</h2>
-        <img alt="post.description" :src="post.image">
-        <p>{{post.description}}</p>
+        <img :alt="post.description" :src="post.image">
         <p>{{post.posttext}}</p>
         <button @click="editPostVisible">Edit Post</button>
         <button @click="deletePost">Delete Post</button>
@@ -58,29 +57,6 @@ export default {
             const data = await response.json()
             console.log(data[0])
             this.post = data[0]
-            // let usersReadArray = this.post.usersread;
-
-            // const userId = localStorage.getItem('userId')
-            // usersReadArray = JSON.parse("[" + usersReadArray.slice(1, usersReadArray.length-1) + "]")
-            // console.log(usersReadArray)
-            // console.log(userId)
-            // usersReadArray.push(userId)
-            // console.log(usersReadArray)
-            // const postData = {
-            //     title: this.post.title,
-            //     image: this.post.image,
-            //     description: this.post.description,
-            //     postText: this.post.posttext,
-            //     userNum: userId
-            // };
-            // // await fetch("http://localhost:3000/api/memes/" + this.postId, {
-            //         method: 'PUT',
-            //         headers: {
-            //         'Content-Type': 'application/json',
-            //         'Authorization': 'Bearer ' + token
-            //         },
-            //         body: JSON.stringify(postData)
-            //     })
         },
         async updateUserRead() {
             const token = localStorage.getItem('token');
@@ -136,3 +112,25 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+img {
+    width: 80%;
+    max-width: 550px;
+    border-radius: 2%;
+}
+label {
+    display: flex;
+    justify-content: center;
+    padding: 12px 0 5px 0;
+    width: 100%;
+    color: #FD2D01;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    margin: 10px
+}
+
+</style>

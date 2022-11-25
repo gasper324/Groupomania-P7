@@ -3,25 +3,25 @@
         <router-link to="/deleteAccount">Delete Account</router-link>
         <router-link to="/viewPosts">View Posts</router-link>
     </nav>
-    <h2>Create a post</h2>
+    <h2>Create Post</h2>
     <form @submit.prevent="createPost">
         <div>
             <label for="title">Post Title</label>
             <input type="text" name="title" v-model="title">
         </div>
         <div>
-            <label for="image">Upload Image</label>
-            <input type="file" accept="image/*" name="image" ref="file" @change="uploadPhoto">
-        </div>
+            <label for="text">Write your post here</label>
+            <input type="textarea" name="text" v-model="postText">
+        </div> 
         <div>
             <label for="img-desc">Image description</label>
             <input type="text" name="img-desc" v-model="description">
         </div>
-        <div>
-            <label for="text">Write your post here</label>
-            <input type="textarea" name="text" v-model="postText">
+        <div id="upload-image-container">
+            <label for="image">Upload Image</label>
+            <input id="image-selection" type="file" accept="image/*" name="image" ref="file" @change="uploadPhoto">
         </div>
-        <button>Post</button>
+        <button>Sumbit Post</button>
     </form>
 </template>
 
@@ -35,8 +35,6 @@ export default {
     },
     methods: {
         uploadPhoto() {
-            // this.image = event.target.files[0].name
-            // console.log(this.image)
             this.file = this.$refs.file.files[0];
             this.fileSource = URL.createObjectURL(this.$refs.file.files[0])
             console.log(this.file)
@@ -87,3 +85,29 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+input {
+    width: 255px;
+    
+}
+
+label {
+    display: flex;
+    justify-content: center;
+    padding: 12px 0 5px 0;
+    width: 100%;
+    color: #FD2D01;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    margin: 10px
+}
+
+#image-selection {
+    width: 200px;
+    margin: 0;
+}
+</style>
