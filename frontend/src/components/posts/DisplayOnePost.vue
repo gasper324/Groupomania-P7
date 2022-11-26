@@ -16,7 +16,7 @@
             <form @submit.prevent="createPost">
                 <div>
                     <label for="title">Post Title</label>
-                    <input type="text" name="title" v-model="post.title">
+                    <input type="text" name="title" v-model="post.title" ref="title">
                 </div>
                 <div>
                     <label for="text">Write your post here</label>
@@ -28,7 +28,7 @@
                 </div>             
                 <div>
                     <label for="image">Upload Image</label>
-                    <input type="file" accept="image/*" name="image" @change="uploadPhoto">
+                    <input type="file" accept="image/*" name="image" ref="file" @change="uploadPhoto">
                 </div>
                 <button @click="submitEdits">Submit Post Edits</button>
                 <button @click="deletePost">Delete Post</button>
@@ -43,7 +43,9 @@ export default {
             post: {},
             postId:'',
             editVisible: false,
-            editPostToggle: "Edit Post"
+            editPostToggle: "Edit Post",
+            file: null,
+            title: ""
         }
     },
 
@@ -81,23 +83,66 @@ export default {
                 this.editPostToggle = "Cancel Edit"
             }
         },
+        uploadPhoto() {
+            this.file = this.$refs.file.files[0];
+            this.fileSource = URL.createObjectURL(this.$refs.file.files[0])
+        },
         async submitEdits() {
-            const postData = {
-                title: this.post.title,
-                image: this.post.image,
-                description: this.post.description,
-                postText: this.post.posttext,
-            };
+            let formData = [];
+            let requestOptions = {};
             const token = localStorage.getItem('token');
-            await fetch("http://localhost:3000/api/memes/" + this.postId, {
-                    method: 'PUT',
+            if (this.file != null) {
+                let post = JSON.stringify({
+                    title: this.post.title,
+                    description: this.post.description,
+                    postText: this.post.posttext,
+                    // usersRead: this.usersRead
+                });
+                console.log(post)
+                formData = new FormData();
+                formData.set('image', this.file);
+                formData.set('post', post);
+                console.log(formData.post);
+                requestOptions = {
+                    method: "PUT",
                     headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + token
+                        'Authorization': 'Bearer ' + token
                     },
-                    body: JSON.stringify(postData)
-                })
+                    body: formData
+                }
+            } else {
+                console.log('Here')
+                formData = {
+                    title: this.post.title,
+                    description: this.post.description,
+                    postText: this.post.posttext
+                }
+                requestOptions = {        
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": "Bearer " + token
+                    },
+                    body: JSON.stringify(formData)}
+            }
+            await fetch("http://localhost:3000/api/memes/" + this.postId, requestOptions);
             this.$router.push('/viewPosts')
+            // const postData = {
+            //     title: this.post.title,
+            //     image: this.post.image,
+            //     description: this.post.description,
+            //     postText: this.post.posttext,
+            // };
+            // const token = localStorage.getItem('token');
+            // await fetch("http://localhost:3000/api/memes/" + this.postId, {
+            //         method: 'PUT',
+            //         headers: {
+            //         'Content-Type': 'application/json',
+            //         'Authorization': 'Bearer ' + token
+            //         },
+            //         body: JSON.stringify(postData)
+            //     })
+            // this.$router.push('/viewPosts')
         },
         async deletePost() {
             console.log('delete')

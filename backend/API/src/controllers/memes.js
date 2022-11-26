@@ -30,12 +30,11 @@ exports.getPostById = async (req, res, next) => {  // needs error for param id n
 
 exports.updatePostById = async (req, res, next) => {  // looks successful when param is non-existant
   const postId = parseInt(req.params.postId);
-  // const usersRead = await db.query('SELECT usersRead from "user" WHERE userId = $1', [userId])
-  const { title, postText, image, description, userNum} = req.body;
-  console.log(userNum)
+  const url = req.protocol + '://' + req.get('host');
+  const image = url + '/' + req.file.filename;
+  const { title, postText, description} = JSON.parse(req.body.post);
     const post = await db.query('UPDATE post SET title = $1, postText = $2, image = $3, description = $4 WHERE postID = $5',
     [title, postText, image, description, postId]);
-  // await db.query('UPDATE post SET usersread = array_append(usersread, userNum = $1 WHERE postId = $2)' [userNum, postId])
   res.status(200).send({message: 'Post updated successfully'})
 }; 
 
