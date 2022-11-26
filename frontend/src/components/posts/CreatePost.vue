@@ -1,7 +1,7 @@
 <template>
     <nav>
-        <router-link to="/deleteAccount">Delete Account</router-link>
         <router-link to="/viewPosts">View Posts</router-link>
+        <router-link to="/deleteAccount">Delete Account</router-link>
     </nav>
     <h2>Create Post</h2>
     <form @submit.prevent="createPost">
@@ -37,14 +37,11 @@ export default {
         uploadPhoto() {
             this.file = this.$refs.file.files[0];
             this.fileSource = URL.createObjectURL(this.$refs.file.files[0])
-            console.log(this.file)
-            console.log(this.fileSource)
         },
         async createPost() {
             let formData = [];
             let requestOptions = {};
             const token = localStorage.getItem('token');
-            console.log(this.file)
             if (this.file != null) {
                 console.log('Bye')
                 let post = JSON.stringify({
@@ -81,6 +78,7 @@ export default {
                     body: JSON.stringify(formData)}
             }
             await fetch("http://localhost:3000/api/memes", requestOptions);
+            this.$router.push('/viewPosts')
         }
     }
 }

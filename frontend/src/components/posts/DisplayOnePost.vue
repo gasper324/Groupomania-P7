@@ -1,15 +1,15 @@
 <template>
-    <nav>
-        <router-link to="/deleteAccount">Delete Account</router-link>
+    <nav>   
         <router-link to="/viewPosts">View Posts</router-link>
         <router-link to="/createPost">Create Post</router-link>
+        <router-link to="/deleteAccount">Delete Account</router-link>
     </nav>
     <section>
         <h2>{{post.title}}</h2>
         <img :alt="post.description" :src="post.image">
         <p>{{post.posttext}}</p>
-        <button @click="editPostVisible">Edit Post</button>
-        <button @click="deletePost">Delete Post</button>
+        <button @click="editPostVisible">{{editPostToggle}}</button>
+        <button v-if="!editVisible" @click="deletePost">Delete Post</button>
     </section>
     <section v-if="editVisible">    
         <h2>Edit post</h2>
@@ -19,18 +19,19 @@
                     <input type="text" name="title" v-model="post.title">
                 </div>
                 <div>
-                    <label for="image">Upload Image</label>
-                    <input type="file" accept="image/*" name="image" @change="uploadPhoto">
-                </div>
+                    <label for="text">Write your post here</label>
+                    <input type="textarea" name="text" v-model="post.posttext">
+                </div>                   
                 <div>
                     <label for="img-desc">Image description</label>
                     <input type="text" name="img-desc" v-model="post.description">
-                </div>
+                </div>             
                 <div>
-                    <label for="text">Write your post here</label>
-                    <input type="textarea" name="text" v-model="post.posttext">
+                    <label for="image">Upload Image</label>
+                    <input type="file" accept="image/*" name="image" @change="uploadPhoto">
                 </div>
                 <button @click="submitEdits">Submit Post Edits</button>
+                <button @click="deletePost">Delete Post</button>
             </form>
     </section>
 </template>
@@ -42,6 +43,7 @@ export default {
             post: {},
             postId:'',
             editVisible: false,
+            editPostToggle: "Edit Post"
         }
     },
 
@@ -73,9 +75,13 @@ export default {
         },
         editPostVisible() {
             this.editVisible = !this.editVisible
+            if (this.editVisible === false) {
+                this.editPostToggle = "Edit Post"
+            } else {
+                this.editPostToggle = "Cancel Edit"
+            }
         },
         async submitEdits() {
-            console.log('edits')
             const postData = {
                 title: this.post.title,
                 image: this.post.image,
@@ -91,6 +97,7 @@ export default {
                     },
                     body: JSON.stringify(postData)
                 })
+            this.$router.push('/viewPosts')
         },
         async deletePost() {
             console.log('delete')

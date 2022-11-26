@@ -1,7 +1,7 @@
 <template>
     <nav>
-        <router-link to="/deleteAccount">Delete Account</router-link>
         <router-link to="/createPost">Create Post</router-link>
+        <router-link to="/deleteAccount">Delete Account</router-link>
     </nav>
     <router-link id="post" v-for="post in postsArray" :key="post.postid" @click="viewPost" :to="'/viewPost/' + post.postid">
         <section class="posts">
