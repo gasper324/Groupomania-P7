@@ -10,10 +10,13 @@ const memesCtrl = require('../controllers/memes');
 
 //sets up endpoints for memes
 router.post('/', auth, multer, memesCtrl.createPost);
+router.post('/noImage', auth, memesCtrl.createPostNoImage);
 router.get('/', auth, memesCtrl.getAllPosts);
 router.get('/:postId', auth, memesCtrl.getPostById);
+router.put('/noImage/:postId', auth, memesCtrl.updatePostByIdNoImage);
 router.put('/:postId', auth, multer, memesCtrl.updatePostById);
-router.put('/usersRead/:postId', auth, memesCtrl.updateUsersRead)
+router.put('/usersRead/:postId', auth, memesCtrl.updateUsersRead);
 router.delete('/:postId', auth, multer, memesCtrl.deletePostById);
+
 
 module.exports = router;

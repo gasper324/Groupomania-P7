@@ -10,7 +10,7 @@
             <h2 id="read" v-if="post.usersread.includes(parseInt(userId)) === true">read</h2>
             <h2 id="unread" v-else>unread</h2>
             </div>
-            <img :src="post.image" :alt="post.description">
+            <img v-if="post.image !== null" :src="post.image" :alt="post.description">
             <p>{{post.posttext}}</p>
         </section>
     </router-link>

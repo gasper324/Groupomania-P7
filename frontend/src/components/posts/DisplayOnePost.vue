@@ -5,11 +5,14 @@
         <router-link to="/deleteAccount">Delete Account</router-link>
     </nav>
     <section>
+        <h4>{{post.postedby}}</h4>
         <h2>{{post.title}}</h2>
         <img :alt="post.description" :src="post.image">
         <p>{{post.posttext}}</p>
-        <button @click="editPostVisible">{{editPostToggle}}</button>
-        <button v-if="!editVisible" @click="deletePost">Delete Post</button>
+        <div v-if="checkUserId() === true">
+            <button @click="editPostVisible">{{editPostToggle}}</button>
+            <button v-if="!editVisible" @click="deletePost">Delete Post</button>
+        </div>
     </section>
     <section v-if="editVisible">    
         <h2>Edit post</h2>
@@ -96,7 +99,6 @@ export default {
                     title: this.post.title,
                     description: this.post.description,
                     postText: this.post.posttext,
-                    // usersRead: this.usersRead
                 });
                 console.log(post)
                 formData = new FormData();
@@ -109,7 +111,8 @@ export default {
                         'Authorization': 'Bearer ' + token
                     },
                     body: formData
-                }
+                } 
+                await fetch("http://localhost:3000/api/memes/" + this.postId, requestOptions);
             } else {
                 console.log('Here')
                 formData = {
@@ -124,25 +127,9 @@ export default {
                         "Authorization": "Bearer " + token
                     },
                     body: JSON.stringify(formData)}
+                await fetch("http://localhost:3000/api/memes/noImage/" + this.postId, requestOptions);
             }
-            await fetch("http://localhost:3000/api/memes/" + this.postId, requestOptions);
             this.$router.push('/viewPosts')
-            // const postData = {
-            //     title: this.post.title,
-            //     image: this.post.image,
-            //     description: this.post.description,
-            //     postText: this.post.posttext,
-            // };
-            // const token = localStorage.getItem('token');
-            // await fetch("http://localhost:3000/api/memes/" + this.postId, {
-            //         method: 'PUT',
-            //         headers: {
-            //         'Content-Type': 'application/json',
-            //         'Authorization': 'Bearer ' + token
-            //         },
-            //         body: JSON.stringify(postData)
-            //     })
-            // this.$router.push('/viewPosts')
         },
         async deletePost() {
             console.log('delete')
@@ -155,6 +142,11 @@ export default {
                     }
             });
             this.$router.push('/viewPosts')
+        },
+        checkUserId() {
+            if (this.post.postedby == localStorage.getItem('userId')) {
+                return true
+            } return false
         }
     },
     created() {

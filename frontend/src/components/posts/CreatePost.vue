@@ -42,13 +42,15 @@ export default {
             let formData = [];
             let requestOptions = {};
             const token = localStorage.getItem('token');
+            const userId = localStorage.getItem('userId');
             if (this.file != null) {
                 console.log('Bye')
                 let post = JSON.stringify({
                     title: this.title,
                     description: this.description,
                     postText: this.postText,
-                    usersRead: []
+                    usersRead: [],
+                    postedBy: userId
                 });
                 console.log(post)
                 formData = new FormData();
@@ -62,12 +64,15 @@ export default {
                     },
                     body: formData
                 }
+            await fetch("http://localhost:3000/api/memes", requestOptions);
             } else {
                 console.log('Here')
                 formData = {
                     title: this.title,
                     description: this.description,
-                    postText: this.postText
+                    postText: this.postText,
+                    usersRead: [],
+                    postedBy: userId
                 }
                 requestOptions = {        
                     method: "POST",
@@ -75,9 +80,11 @@ export default {
                         "Content-Type": "application/json",
                         "Authorization": "Bearer " + token
                     },
-                    body: JSON.stringify(formData)}
+                    body: JSON.stringify(formData)
+                }
+                await fetch("http://localhost:3000/api/memes/noImage", requestOptions);
             }
-            await fetch("http://localhost:3000/api/memes", requestOptions);
+            
             this.$router.push('/viewPosts')
         }
     }
