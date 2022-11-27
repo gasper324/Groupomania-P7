@@ -1,11 +1,10 @@
 <template>
-    <nav>   
+    <nav>
+        <router-link @click="logout" to="/login">Logout</router-link>   
         <router-link to="/viewPosts">View Posts</router-link>
         <router-link to="/createPost">Create Post</router-link>
-        <router-link to="/deleteAccount">Delete Account</router-link>
     </nav>
     <section>
-        <h4>{{post.postedby}}</h4>
         <h2>{{post.title}}</h2>
         <img :alt="post.description" :src="post.image">
         <p>{{post.posttext}}</p>
@@ -64,12 +63,10 @@ export default {
             const data = await response.json()
             console.log(data[0])
             this.post = data[0]
-        },
-        async updateUserRead() {
-            const token = localStorage.getItem('token');
-            const userId = localStorage.getItem('userId');
-            const postData = {userNum: userId}
-                await fetch("http://localhost:3000/api/memes/usersRead/" + this.postId, {
+            const userId = parseInt(localStorage.getItem('userId'))
+            if (this.post.usersread.includes(userId) === false) {
+                const postData = {userNum: userId} 
+                    await fetch("http://localhost:3000/api/memes/usersRead/" + this.postId, {
                     method: 'PUT',
                     headers: {
                     'Content-Type': 'application/json',
@@ -77,6 +74,8 @@ export default {
                     },
                     body: JSON.stringify(postData)
                 })
+            }
+
         },
         editPostVisible() {
             this.editVisible = !this.editVisible
@@ -147,12 +146,14 @@ export default {
             if (this.post.postedby == localStorage.getItem('userId')) {
                 return true
             } return false
+        },
+        logout() {
+            localStorage.clear()
         }
     },
     created() {
         this.postId = (this.$route.params.postid);
         this.getPost();
-        this.updateUserRead()
     }
 }
 </script>

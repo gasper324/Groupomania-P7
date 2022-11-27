@@ -41,6 +41,8 @@ export default ({
                 console.log('Passwords do not match');
             } else if (this.password.length < 8) {
                 console.log('Password must be at least 8 characters')
+            } else if(this.email.includes('@groupomania.com') === false) {
+                console.log('Must use your Groupomania email address')
             } else {
                 const formData = {
                     firstName: this.firstName,
@@ -54,6 +56,7 @@ export default ({
                     body: JSON.stringify(formData)
                 });
                 console.log('Post Successful');
+                this.$router.push('/login')
             }
         }
     }
@@ -83,6 +86,11 @@ form {
     display: flex;
     flex-direction: column;
     margin: 10px
+}
+
+.form-label {
+    display: flex;
+
 }
 
 </style>

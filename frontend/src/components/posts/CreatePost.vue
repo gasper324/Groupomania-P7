@@ -1,5 +1,6 @@
 <template>
     <nav>
+        <router-link @click="logout" to="/login">Logout</router-link>
         <router-link to="/viewPosts">View Posts</router-link>
         <router-link to="/deleteAccount">Delete Account</router-link>
     </nav>
@@ -86,6 +87,9 @@ export default {
             }
             
             this.$router.push('/viewPosts')
+        },
+        logout() {
+            localStorage.clear()
         }
     }
 }

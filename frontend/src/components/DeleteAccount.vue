@@ -1,5 +1,6 @@
 <template>
     <nav>
+        <router-link @click="logout" to="/login">Logout</router-link>
         <router-link to="/viewPosts">View Posts</router-link>
         <router-link to="/createPost">Create Post</router-link>
     </nav>
@@ -32,10 +33,10 @@ export default {
             });
             localStorage.clear();
             this.$router.push('/');
+        },
+        logout() {
+            localStorage.clear()
         }
-    },
-    created() {
-
     }
 }
 </script>

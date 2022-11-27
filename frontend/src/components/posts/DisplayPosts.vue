@@ -1,17 +1,18 @@
 <template>
     <nav>
+        <router-link @click="logout" to="/login">Logout</router-link>
         <router-link to="/createPost">Create Post</router-link>
         <router-link to="/deleteAccount">Delete Account</router-link>
     </nav>
     <router-link id="post" v-for="post in postsArray" :key="post.postid" @click="viewPost" :to="'/viewPost/' + post.postid">
         <section class="posts">
             <div>
-            <h2>{{post.title}}</h2>
-            <h2 id="read" v-if="post.usersread.includes(parseInt(userId)) === true">read</h2>
-            <h2 id="unread" v-else>unread</h2>
+                <h2>{{post.title}}</h2>
+                <h2 id="read" v-if="post.usersread.includes(parseInt(userId)) === true">read</h2>
+                <h2 id="unread" v-else>unread</h2>
             </div>
             <img v-if="post.image !== null" :src="post.image" :alt="post.description">
-            <p>{{post.posttext}}</p>
+            <p id="posttext">{{post.posttext}}</p>
         </section>
     </router-link>
 </template>
@@ -41,6 +42,9 @@ export default {
                 this.postsArray.push(data[i])
             }
         },
+        logout() {
+            localStorage.clear()
+        }
     },
     created() {
         this.getPosts()
@@ -55,6 +59,7 @@ img {
     width: 200px;
     height: 200px;
     border-radius: 10px;
+    object-fit: cover
 }   
 .posts {
     color: black;
@@ -100,5 +105,10 @@ h2 {
     display: flex;
     justify-content: space-evenly;
     flex-direction: row;
+}
+
+#posttext {
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 </style>
