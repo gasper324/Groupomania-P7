@@ -12,12 +12,12 @@
         <div>
             <label for="last-name">Last Name</label>
             <input type="text" name="last-name" v-model="lastName">
-            <p v-if="firstName === ''">required</p>
+            <p v-if="lastName === ''">required</p>
         </div>
         <div>
             <label for="email">Groupomania Email</label>
             <input type="text" name="email" v-model="email">
-            <p v-if="firstName === ''">required</p>
+            <p v-if="email === ''">required</p>
         </div>
         <div>
             <label for="password">Password</label>
