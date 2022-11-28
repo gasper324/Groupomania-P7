@@ -61,7 +61,6 @@ export default {
                     },
                 });
             const data = await response.json()
-            console.log(data[0])
             this.post = data[0]
             const userId = parseInt(localStorage.getItem('userId'))
             if (this.post.usersread.includes(userId) === false) {
@@ -99,11 +98,9 @@ export default {
                     description: this.post.description,
                     postText: this.post.posttext,
                 });
-                console.log(post)
                 formData = new FormData();
                 formData.set('image', this.file);
                 formData.set('post', post);
-                console.log(formData.post);
                 requestOptions = {
                     method: "PUT",
                     headers: {
@@ -113,7 +110,6 @@ export default {
                 } 
                 await fetch("http://localhost:3000/api/memes/" + this.postId, requestOptions);
             } else {
-                console.log('Here')
                 formData = {
                     title: this.post.title,
                     description: this.post.description,
@@ -131,7 +127,6 @@ export default {
             this.$router.push('/viewPosts')
         },
         async deletePost() {
-            console.log('delete')
             const token = localStorage.getItem('token');
             await fetch("http://localhost:3000/api/memes/" + this.postId, {
                     method: 'DELETE',

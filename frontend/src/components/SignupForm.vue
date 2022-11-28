@@ -18,11 +18,11 @@
         </div>
         <div>
             <label for="password">Password</label>
-            <input type="text" name="password" v-model="password">
+            <input type="password" name="password" v-model="password">
         </div>
         <div>
             <label for="confirm-password">Confirm Password</label>
-            <input type="text" name="confirm-password" v-model="confirmPassword">
+            <input type="password" name="confirm-password" v-model="confirmPassword">
         </div>
         <button>Sumbit</button>
     </form>
@@ -55,7 +55,6 @@ export default ({
                     headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify(formData)
                 });
-                console.log('Post Successful');
                 this.$router.push('/login')
             }
         }

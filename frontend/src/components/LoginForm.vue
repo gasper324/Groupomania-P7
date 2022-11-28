@@ -8,7 +8,7 @@
             </div>
             <div>
                 <label for="password">Password</label>
-                <input type="text" name="password" v-model="password">
+                <input type="password" name="password" v-model="password">
             </div>
             <button>Login</button>
             <p>No account?  Click to <span @click="linkToSignup">sign-up</span></p>
@@ -39,7 +39,6 @@ export default{
                     },       
             })
             const userData = await userResponse.json()
-            console.log(userData)
             localStorage.setItem('fullName', userData[0].firstname + " " + userData[0].lastname)
             localStorage.setItem('firstName', userData[0].firstname)
             this.$router.push('/viewPosts')

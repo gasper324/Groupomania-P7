@@ -45,7 +45,6 @@ export default {
             const token = localStorage.getItem('token');
             const userId = localStorage.getItem('userId');
             if (this.file != null) {
-                console.log('Bye')
                 let post = JSON.stringify({
                     title: this.title,
                     description: this.description,
@@ -53,11 +52,9 @@ export default {
                     usersRead: [],
                     postedBy: userId
                 });
-                console.log(post)
                 formData = new FormData();
                 formData.set('image', this.file);
                 formData.set('post', post);
-                console.log(formData);
                 requestOptions = {
                     method: "POST",
                     headers: {
@@ -67,7 +64,6 @@ export default {
                 }
             await fetch("http://localhost:3000/api/memes", requestOptions);
             } else {
-                console.log('Here')
                 formData = {
                     title: this.title,
                     description: this.description,

@@ -41,7 +41,6 @@ exports.login = async (req, res, next) => {
 
 exports.deleteAccount = async (req, res, next) => {
     const userId = req.params.userId
-    console.log(userId);
     await db.query('DELETE FROM "user" WHERE userid = $1', [userId]);
     res.status(200).send({
         message: 'Account deleted'})

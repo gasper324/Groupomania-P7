@@ -23,7 +23,6 @@ export default {
         async deleteAccount() {
             const token = localStorage.getItem('token');
             const userId = parseInt(localStorage.getItem('userId'));
-            console.log(userId)
             await fetch("http://localhost:3000/api/user/deleteAccount/" + userId, {
                     method: 'DELETE',
                     headers: {
