@@ -71,4 +71,8 @@ button:hover {
     background-color: #b11f01;
 }
 
+strong {
+    margin-top: 10px;
+}
+
 </style>

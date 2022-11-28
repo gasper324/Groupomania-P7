@@ -4,13 +4,19 @@ const db = require("../config/database.js");
 
 exports.signup = async (req, res, next) => {
     const { firstName, lastName, email } = req.body;
-    const password = await bcrypt.hash(req.body.password, 10);
-    const { rows } = await db.query('INSERT INTO "user" (firstName, lastName, email, password) VALUES ($1, $2, $3, $4)', 
-        [firstName, lastName, email, password]);
-    res.status(201).send({
-        message: 'User created successfully',
-        body: {firstName, lastName, email, password}
-    });
+    try {
+        const password = await bcrypt.hash(req.body.password, 10);
+        const { rows } = await db.query('INSERT INTO "user" (firstName, lastName, email, password) VALUES ($1, $2, $3, $4)', 
+            [firstName, lastName, email, password]);
+        res.status(201).send({
+            message: 'User created successfully',
+            body: {firstName, lastName, email, password}
+        });
+    } catch(error) {
+        res.status(400).send({
+            error: error
+        })
+    }
 };
 
 exports.login = async (req, res, next) => {

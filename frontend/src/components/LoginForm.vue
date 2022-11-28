@@ -4,7 +4,7 @@
         <form @submit.prevent="login">
             <div>
                 <label for="email">Email</label>
-                <input type="text" name="email" v-model="email">
+                <input type="text" name="email" v-model="email" maxlength="100">
             </div>
             <div>
                 <label for="password">Password</label>
@@ -64,6 +64,9 @@ export default{
             this.$router.push('/signup')
         }
     },
+    created() {
+        this.email = (this.$route.params.email);
+    }
 }
 </script>
 
@@ -113,7 +116,4 @@ p {
     display: flex;
 }
 
-strong {
-    margin-top: 10px;
-}
 </style>

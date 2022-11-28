@@ -8,19 +8,19 @@
     <form @submit.prevent="createPost">
         <div>
             <label for="title">Post Title</label>
-            <input type="text" name="title" v-model="title">
+            <input type="text" name="title" v-model="title" maxlength="60">
         </div>
         <div>
             <label for="text">Write your post here</label>
-            <input type="textarea" name="text" v-model="postText">
+            <textarea id="text" name="text" v-model="postText" maxlength="300"></textarea>
         </div> 
         <div>
             <label for="img-desc">Image description</label>
-            <input type="text" name="img-desc" v-model="description">
+            <input type="text" name="img-desc" v-model="description" maxlength="150">
         </div>
         <div id="upload-image-container">
             <label for="image">Upload Image</label>
-            <input id="image-selection" type="file" accept="image/*" name="image" ref="file" @change="uploadPhoto">
+            <input id="image-selection" type="file" accept="image/*" name="image" ref="file" @change="uploadPhoto" maxlength="60">
         </div>
         <button>Sumbit Post</button>
     </form>
@@ -65,7 +65,11 @@ export default {
                     },
                     body: formData
                 }
-            await fetch("http://localhost:3000/api/memes", requestOptions);
+            try { 
+                await fetch("http://localhost:3000/api/memes", requestOptions) 
+            } catch {
+                console.log('error creating post')
+            }
             } else {
                 formData = {
                     title: this.title,
@@ -117,5 +121,10 @@ form {
 #image-selection {
     width: 200px;
     margin: 0;
+}
+
+#text {
+    width: 255px;
+    height: 165px
 }
 </style>

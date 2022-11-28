@@ -173,4 +173,12 @@ form {
     margin: 10px
 }
 
+p {
+    padding-top: 15px;
+    overflow-wrap: break-word;
+    width: 76%;
+    margin: 0 auto;
+
+}
+
 </style>

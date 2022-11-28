@@ -6,17 +6,17 @@
     <form @submit.prevent="submitForm">
         <div>
             <label for="first-name">First Name</label>
-            <input type="text" name="first-name" v-model="firstName">
+            <input type="text" name="first-name" v-model="firstName" maxlength="50">
             <p v-if="firstName === ''">required</p>
         </div>
         <div>
             <label for="last-name">Last Name</label>
-            <input type="text" name="last-name" v-model="lastName">
+            <input type="text" name="last-name" v-model="lastName" maxlength="50">
             <p v-if="lastName === ''">required</p>
         </div>
         <div>
             <label for="email">Groupomania Email</label>
-            <input type="text" name="email" v-model="email">
+            <input type="text" name="email" v-model="email" maxlength="100">
             <p v-if="email === ''">required</p>
         </div>
         <div>
@@ -30,6 +30,7 @@
             <p v-if="checkPasswordMatch()">Passwords must match</p>
         </div>
         <button>Sumbit</button>
+        <strong v-if="errorMessage !== ''">Sign-Up failed.  {{errorMessage}}</strong>
     </form>
 </template>
 
@@ -41,31 +42,54 @@ export default ({
             lastName: '',
             email: '',
             password: '',
-            confirmPassword: ''
+            confirmPassword: '',
+            errorMessage: ''
         }
     },
     methods: {
         async submitForm() {
+            if (this.firstName === '') {
+                this.errorMessage = 'First Name is a required field.'
+                return
+            }   
+            if (this.lastName === '') {
+                this.errorMessage = 'Last Name is a required field.'
+                return
+            }           
+            if (this.email.includes('@groupomania.com') === false) {
+                this.errorMessage = 'Must use your Groupomania email address'
+                return
+            }  
+            if (this.password.length < 8) {
+                this.errorMessage = 'Password must be at least 8 characters';
+                return
+            }
             if (this.password !== this.confirmPassword) {
-                console.log('Passwords do not match');
-            } else if (this.password.length < 8) {
-                console.log('Password must be at least 8 characters')
-            } else if(this.email.includes('@groupomania.com') === false) {
-                console.log('Must use your Groupomania email address')
-            } else {
+                this.errorMessage = 'Passwords do not match.';
+                return
+            } 
                 const formData = {
                     firstName: this.firstName,
                     lastName: this.lastName,
                     email: this.email,
                     password: this.password
                 }
-                await fetch("http://localhost:3000/api/user", {
+                const response = await fetch("http://localhost:3000/api/user", {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify(formData)
                 });
-                this.$router.push('/login')
-            }
+                const data = await response.json()
+                if (data.error === undefined) { 
+                    this.$router.push('/login/' + this.email)    
+                } else if (data.error.constraint === 'user_email_key') {
+                    this.errorMessage = ('An account already exists for this email')
+                    return
+                } else if (data.error.constraint !== undefined) {
+                    this.errorMessage = data.error.constraint
+                    return
+                }
+
         },
         checkPasswordMatch() {
             if (this.password === this.confirmPassword) {

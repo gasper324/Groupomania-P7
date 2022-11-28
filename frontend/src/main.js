@@ -15,6 +15,7 @@ const router = createRouter({
     routes: [
         { path: '/', redirect: '/login'},
         { path: '/login', component: LoginForm},
+        { path: '/login/:email', component: LoginForm},
         { path: '/signup', component: SignupForm},
         { path: '/createPost', component: CreatePost},
         { path: '/viewPosts', component: DisplayPosts},
