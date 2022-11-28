@@ -4,7 +4,7 @@
         <router-link to="/createPost">Create Post</router-link>
         <router-link to="/deleteAccount">Delete Account</router-link>
     </nav>
-    <router-link id="post" v-for="post in postsArray" :key="post.postid" @click="viewPost" :to="'/viewPost/' + post.postid">
+    <router-link id="post" v-for="post in postsArray" :key="post.postid" :to="'/viewPost/' + post.postid">
         <section class="posts">
             <div>
                 <h2>{{post.title}}</h2>
@@ -24,7 +24,8 @@ export default {
         return {
             postsArray: [],
             isRead: false,
-            userId: localStorage.getItem('userId')
+            userId: localStorage.getItem('userId'),
+            
         }
     },
     methods: {

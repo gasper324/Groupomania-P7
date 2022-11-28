@@ -31,7 +31,10 @@
 export default {
     data() {
         return {
-            file: null
+            file: null,
+            title: "",
+            postText: "",
+            description: ""
         }
     },
     methods: {

@@ -11,6 +11,7 @@
                 <input type="password" name="password" v-model="password">
             </div>
             <button>Login</button>
+            <strong v-if="!validLogin">{{loginErrorMessage}}</strong>
             <p>No account?  Click to <span @click="linkToSignup">sign-up</span></p>
         </form>
     </section>
@@ -18,9 +19,19 @@
 
 <script>
 export default{
+    data() {
+        return {
+            validLogin: true,
+            loginErrorMessage: "None",
+            email: "",
+            password: ""
+        }
+    },
     methods: {
         async login() {
             localStorage.clear()
+            this.validLogin = true
+            this.loginErrorMessage = ""
             const loginData = {email: this.email, password: this.password}
             const response = await fetch("http://localhost:3000/api/user/login", {
                     method: 'POST',
@@ -43,6 +54,9 @@ export default{
                 localStorage.setItem('fullName', userData[0].firstname + " " + userData[0].lastname)
                 localStorage.setItem('firstName', userData[0].firstname)
                 this.$router.push('/viewPosts')
+        } else {
+            this.validLogin = false;
+            this.loginErrorMessage = data.error;
         }
 
         },
@@ -97,5 +111,9 @@ p {
     margin-top: 30px;
     justify-content: center;
     display: flex;
+}
+
+strong {
+    margin-top: 10px;
 }
 </style>

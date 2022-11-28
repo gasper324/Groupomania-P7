@@ -7,22 +7,27 @@
         <div>
             <label for="first-name">First Name</label>
             <input type="text" name="first-name" v-model="firstName">
+            <p v-if="firstName === ''">required</p>
         </div>
         <div>
             <label for="last-name">Last Name</label>
             <input type="text" name="last-name" v-model="lastName">
+            <p v-if="firstName === ''">required</p>
         </div>
         <div>
             <label for="email">Groupomania Email</label>
             <input type="text" name="email" v-model="email">
+            <p v-if="firstName === ''">required</p>
         </div>
         <div>
             <label for="password">Password</label>
             <input type="password" name="password" v-model="password">
+            <p v-if="checkPasswordLength()">Must contain at least 8 characters</p>
         </div>
         <div>
             <label for="confirm-password">Confirm Password</label>
             <input type="password" name="confirm-password" v-model="confirmPassword">
+            <p v-if="checkPasswordMatch()">Passwords must match</p>
         </div>
         <button>Sumbit</button>
     </form>
@@ -32,7 +37,11 @@
 export default ({
     data() {
         return {
-            firstName: ''
+            firstName: '',
+            lastName: '',
+            email: '',
+            password: '',
+            confirmPassword: ''
         }
     },
     methods: {
@@ -57,6 +66,16 @@ export default ({
                 });
                 this.$router.push('/login')
             }
+        },
+        checkPasswordMatch() {
+            if (this.password === this.confirmPassword) {
+                return false
+            } return true
+        },
+        checkPasswordLength() {
+            if (this.password.length < 8) {
+                return true
+            } return false
         }
     }
 })
@@ -70,7 +89,6 @@ div {
 
 input {
     width: 255px;
-    
 }
 
 label {
@@ -90,6 +108,15 @@ form {
 .form-label {
     display: flex;
 
+}
+
+p {
+    display: flex;
+    justify-content: right;
+    width: 245px;
+    margin: 2px auto;
+    font-style: italic;
+    font-size: small;
 }
 
 </style>
