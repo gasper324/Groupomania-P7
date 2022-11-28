@@ -28,20 +28,22 @@ export default{
                     body: JSON.stringify(loginData)
                 });
             const data = await response.json()
-            localStorage.setItem('userId', data.userId);
-            localStorage.setItem('token', data.token);
-            const userId = localStorage.getItem('userId')
-            const token = localStorage.getItem('token')
-            const userResponse = await fetch("http://localhost:3000/api/user/" + userId, {
-                headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': 'Bearer ' + token
-                    },       
-            })
-            const userData = await userResponse.json()
-            localStorage.setItem('fullName', userData[0].firstname + " " + userData[0].lastname)
-            localStorage.setItem('firstName', userData[0].firstname)
-            this.$router.push('/viewPosts')
+            if (data.userId) {
+                localStorage.setItem('userId', data.userId);
+                localStorage.setItem('token', data.token);
+                const userId = localStorage.getItem('userId')
+                const token = localStorage.getItem('token')
+                const userResponse = await fetch("http://localhost:3000/api/user/" + userId, {
+                    headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': 'Bearer ' + token
+                        },       
+                })
+                const userData = await userResponse.json()
+                localStorage.setItem('fullName', userData[0].firstname + " " + userData[0].lastname)
+                localStorage.setItem('firstName', userData[0].firstname)
+                this.$router.push('/viewPosts')
+        }
 
         },
         linkToSignup() {

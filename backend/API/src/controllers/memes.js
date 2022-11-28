@@ -1,6 +1,6 @@
 const db = require("../config/database.js");
 const fs = require('fs');
-const { post } = require("../app.js");
+// const { post } = require("../app.js");
 
 exports.createPost = async (req, res, next) => {
     const url = req.protocol + '://' + req.get('host');
