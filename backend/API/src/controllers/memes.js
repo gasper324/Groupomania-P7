@@ -114,10 +114,7 @@ exports.updateUsersRead = async (req, res, next) => {
 
 exports.deletePostById = async (req, res, next) => {
   const postId = parseInt(req.params.postId);
-  console.log(req.file)
   try {
-    const imageName = req.file.filename;
-    const url = "../images/" + imageName;
     await db.query('DELETE FROM post WHERE postId = $1', [postId]);
     res.status(200).send({ 
       message: 'Post deleted from database'
