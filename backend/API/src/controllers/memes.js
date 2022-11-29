@@ -99,9 +99,7 @@ exports.updatePostByIdNoImage = async (req, res, next) => {
 
 exports.updateUsersRead = async (req, res, next) => {
   const postId = parseInt(req.params.postId);
-  console.log(postId)
   const userNum = req.body.userNum
-  console.log(userNum)
   try {
     await db.query('UPDATE post SET usersread = array_append(usersread, $1) WHERE postId = $2', [userNum, postId])
     res.status(200).send({message: 'UsersRead updated successfully'})
