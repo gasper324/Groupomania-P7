@@ -4,17 +4,19 @@
         <router-link to="/createPost">Create Post</router-link>
         <router-link to="/deleteAccount">Delete Account</router-link>
     </nav>
-    <router-link id="post" v-for="post in postsArray" :key="post.postid" :to="'/viewPost/' + post.postid">
-        <section class="posts">
-            <div>
-                <h2>{{post.title}}</h2>
-                <h2 id="read" v-if="post.usersread.includes(parseInt(userId)) === true">read</h2>
-                <h2 id="unread" v-else>unread</h2>
-            </div>
-            <img v-if="post.image !== null" :src="post.image" :alt="post.description">
-            <p id="posttext">{{post.posttext}}</p>
-        </section>
-    </router-link>
+    <section class="post-container">
+        <router-link id="post" v-for="post in postsArray" :key="post.postid" :to="'/viewPost/' + post.postid">
+            <section class="posts">
+                <div>
+                    <h2>{{post.title}}</h2>
+                    <h2 id="read" v-if="post.usersread.includes(parseInt(userId)) === true">read</h2>
+                    <h2 id="unread" v-else>unread</h2>
+                </div>
+                <img v-if="post.image !== null" :src="post.image" :alt="post.description">
+                <p id="posttext">{{post.posttext}}</p>
+            </section>
+        </router-link>
+    </section>
 </template>
 
 <script>
@@ -70,6 +72,11 @@ img {
     background-color: aliceblue;
 }
 
+.post-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
 div {
     display: flex;
     justify-content: center;
@@ -101,14 +108,11 @@ h2 {
     margin: 34px 0 0 0
 }
 
-#post {
-    display: flex;
-    justify-content: space-evenly;
-    flex-direction: row;
-}
-
 #posttext {
     overflow: hidden;
     text-overflow: ellipsis;
+    width: 180px;
+    margin: 0 auto;
 }
+
 </style>

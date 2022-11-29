@@ -23,38 +23,55 @@ exports.login = async (req, res, next) => {
     const email = req.body.email;
     const password = req.body.password;
     const userProfile = await db.query('SELECT * FROM "user" WHERE email = $1', [email]);
-    if(userProfile.rows.length === 0) {
-        return res.status(401).send({
-            error: 'Login failed.  User not found!'
+    try {
+        if (userProfile.rows.length === 0) {
+            return res.status(401).send({
+                error: 'Login failed.  User not found!'
+                });
+        };
+        const passwordMatchBoolean = await bcrypt.compare(password, userProfile.rows[0].password);
+        if (passwordMatchBoolean === false) {
+            return res.status(401).send({
+                error: 'Login failed.  Invaild password'
             });
-    };
-    const passwordMatchBoolean = await bcrypt.compare(password, userProfile.rows[0].password);
-    if (passwordMatchBoolean === false) {
-        return res.status(401).send({
-            error: 'Login failed.  Invaild password'
+        };
+        const token = jwt.sign(
+            { userId: userProfile.rows[0].userid},
+            process.env.TOKEN,
+            { expiresIn: '24h' });
+        res.status(200).send({
+            userId: userProfile.rows[0].userid,
+            token: token,
+            message: "Login successful"
         });
-    };
-    const token = jwt.sign(
-        { userId: userProfile.rows[0].userid},
-        process.env.TOKEN,
-        { expiresIn: '24h' });
-    res.status(200).send({
-        userId: userProfile.rows[0].userid,
-        token: token,
-        message: "Login successful"
-    });
+    } catch {
+        res.status(400).send({
+            error: error
+        })
+    }
 };
 
 exports.deleteAccount = async (req, res, next) => {
     const userId = req.params.userId
-    await db.query('DELETE FROM "user" WHERE userid = $1', [userId]);
-    res.status(200).send({
-        message: 'Account deleted'})
-
+    try {
+        await db.query('DELETE FROM "user" WHERE userid = $1', [userId]);
+        res.status(200).send({
+            message: 'Account deleted'})
+    } catch {
+        res.status(400).send({
+            error: error
+        })
+    }
 }
 
 exports.getUserData = async (req, res, next) => {
     const userId = req.params.userId
-    const userData = await db.query('SELECT firstname, lastname FROM "user" WHERE userId = $1', [userId]);
-    res.status(200).send(userData.rows);
+    try {
+        const userData = await db.query('SELECT firstname, lastname FROM "user" WHERE userId = $1', [userId]);
+        res.status(200).send(userData.rows);
+    } catch {
+        res.status(400).send({
+            error: error
+        })
+    }
 }

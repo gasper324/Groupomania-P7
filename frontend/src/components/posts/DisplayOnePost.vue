@@ -18,19 +18,19 @@
             <form @submit.prevent="createPost">
                 <div>
                     <label for="title">Post Title</label>
-                    <input type="text" name="title" v-model="post.title" ref="title">
+                    <input type="text" name="title" v-model="post.title" ref="title" maxlength="60">
                 </div>
                 <div>
                     <label for="text">Write your post here</label>
-                    <input type="textarea" name="text" v-model="post.posttext">
+                    <textarea id="text" name="text" v-model="post.posttext" maxlength="300"></textarea>
                 </div>                   
                 <div>
                     <label for="img-desc">Image description</label>
-                    <input type="text" name="img-desc" v-model="post.description">
+                    <input type="text" name="img-desc" v-model="post.description" maxlength="150">
                 </div>             
                 <div>
                     <label for="image">Upload Image</label>
-                    <input type="file" accept="image/*" name="image" ref="file" @change="uploadPhoto">
+                    <input type="file" accept="image/*" name="image" ref="file" @change="uploadPhoto" maxlength="60">
                 </div>
                 <button @click="submitEdits">Submit Post Edits</button>
                 <button @click="deletePost">Delete Post</button>
@@ -132,7 +132,7 @@ export default {
                     method: 'DELETE',
                     headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + token
+                    'Authorization': 'Bearer ' + token,
                     }
             });
             this.$router.push('/viewPosts')
@@ -179,6 +179,15 @@ p {
     width: 76%;
     margin: 0 auto;
 
+}
+
+#text {
+    width: 255px;
+    height: 165px
+}
+
+input {
+    width: 255px;  
 }
 
 </style>

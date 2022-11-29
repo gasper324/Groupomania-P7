@@ -100,8 +100,7 @@ export default {
 
 <style scoped>
 input {
-    width: 255px;
-    
+    width: 255px;  
 }
 
 label {
